@@ -172,7 +172,7 @@ Plugin 'scrooloose/syntastic'
 "需要头文件名补全时输入Ctrl+X Ctrl+I，需要文件路径补全时输入Ctrl+X Ctrl+F。
 " "取消补全内容以分割子窗口形式出现，只显示补全列表
 "
-set tags=/home/bolv/workspace/linux-0.11/tags
+set tags=~/workspace/linux-0.11/tags
 set completeopt=longest,menu
 
 """"""""""""""""""""""""""""""
@@ -574,4 +574,5 @@ func FormartSrc()
 endfunc
 "结束定义FormartSrc
 
-
+"  dictionary completion :ctrl-x ctrl-k 
+set dictionary=/usr/share/dict/words
