@@ -5,7 +5,8 @@
 " Version: 
 "       1.0 - 2014-12-05 12:51:11
 "       1.1 - 2014-12-08 20:41:19
-"       1.2 - 2014-12-09 18:54:36
+"       1.2 - 2014-12-09 18:54:36 -- upload to GitHub
+"       1.3 - 2014-12-11 14:58:37 -- 2015-01-06 19:49:47
 " Blog_post: 
 "	https://klarmannde.wordpress.com
 " Awesome_version:
@@ -34,15 +35,16 @@ nmap <leader>w :w!<cr>
 
 " 快速退出
 if has("gui_running")
-	nmap <silent> <C-q> :q!<CR>
-	vmap <silent> <C-q> :q!<CR>
+    nmap <silent> <C-q> :q!<CR>
+    vmap <silent> <C-q> :q!<CR>
 endif
 
 " 设置缩写
 ab noo ==============================================================
 ab moo """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-abbreviate #e ########################################/ 
-abbreviate #b /######################################## 
+abbreviate #e ****************************************/ 
+abbreviate #b /**************************************** 
+abbreviate #i #include <
 
 " 插入当前系统时间 ， 上边的版本后面时间 就是 用这个插入的，方便多了
 nnoremap <F5> "=strftime("%F %H:%M:%S")<CR>gP
@@ -51,7 +53,7 @@ inoremap <F5> <C-R>=strftime("%F %H:%M:%S")<CR>
 "===================================================
 "插件的设置 Vundle －－ 用来管理插件 方便快捷，整齐大方。
 "===================================================
-set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, required, 去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -78,9 +80,8 @@ let g:vimim_toggle=-1 " 彻底关闭循环键
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " Color
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-Plugin 'peaksea'
 Plugin 'altercation/vim-colors-solarized'
-
+Plugin 'tomasr/molokai'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " drawit --> 画图工具
 " 
@@ -151,6 +152,15 @@ map <leader>f :MRU<CR>
 "YOUCOMPLETEME
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Plugin 'Valloric/YouCompleteMe'
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" scrooloose/syntastic
+" Syntastic is a syntax checking plugin that runs files through external syntax
+" checkers and displays any resulting errors to the user. 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+Plugin 'scrooloose/syntastic'
 
 """"""""""""""""""""""""""""""
 "ctags 
@@ -169,7 +179,7 @@ set completeopt=longest,menu
 " Taglist
 """"""""""""""""""""""""""""""
 Plugin 'taglist.vim'
-nnoremap <silent> <F8> :TlistToggle<CR>
+"nnoremap <silent> <F8> :TlistToggle<CR>
 
 """"""""""""""""""""""""""""""
 " bash 的支持
@@ -208,9 +218,14 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'amix/vim-zenroom2'
 map <leader>z :Goyo<cr>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" highlight.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+Plugin 'highlight.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-filetype plugin indent on    " required
+filetype plugin indent on    " required  为特定文件类型载入相关缩进文件
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 " Brief help
@@ -229,12 +244,28 @@ filetype plugin indent on    " required
 syntax enable
 
 " Set extra options when running in GUI mode
-set background=dark
+if ! has("gui_running")
+    set t_Co=256
+endif 
+
+"set background=dark
 "colorscheme peaksea
-colorscheme solarized
+"colorscheme solarized
+
+"If you prefer the scheme to match the original monokai background color, put
+"this in your .vimrc file: 
+let g:molokai_original = 1
+"There is also an alternative scheme under development for color terminals which
+"attempts to bring the 256 color version as close as possible to the the default
+"(dark) GUI version. To access, add this to your .vimrc:
+let g:rehash256 = 1
+
+colorscheme molokai
 
 " 设置字体
 set guifont=DejaVu\ Sans\ mono\ 12 
+
+"autocmd InsertEnter * se cul " 用浅色高亮当前行
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -257,29 +288,47 @@ set fenc=utf-8
 "设置路径
 set autochdir
 
+" 侦测文件类型
+filetype on
+
+" 载入文件类型插件
+filetype plugin on
+
+" 为特定文件类型载入相关缩进文件
+filetype indent on
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
+" Use spaces instead of tabs " 不要用空格代替制表符
 set expandtab
 
-" Be smart when using tabs ;)
+" Be smart when using tabs ;) 在行和段开始处使用制表符
 set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 4 spaces " Tab键的宽度
+" 统一缩进为4
 set shiftwidth=4
+set softtabstop=4
 set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
-set tw=500
+"set tw=500
+"以下设置用来是vim正确显示过长的行
+set textwidth=80
+set formatoptions=qrnl
 
+" 自动缩进
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+"set wrap "Wrap lines
 
 " 要查看 左右 10个字符的上下文
 set sidescroll=10
+
+" 光标移动到buffer的顶部和底部时保持3行距离 
+set scrolloff=3         
 
 " Configure backspace so it acts as it should act;
 " 设置 insert 模式下退格键 何时可以删除光标前的字符
@@ -288,16 +337,18 @@ set sidescroll=10
 set backspace=indent,eol,start
 
 " 多数移动光标命令都会在行首 行尾停止不动 , whichwrap 可以控制此时行为规则
-" b,s,<,> 针对normal 模式下的 退格键，空格键，左，右键  [,] 使得 左右键 在 insert 模式下也可用
-" set whichwrap& 可恢复默认值，其他也是 让退格，空格，上下箭头遇到行首行尾时自动移到下一行（包括insert模式）
+" b,s,<,> 针对normal 模式下的 退格键，空格键，左，右键  [,] 使得 左右键 在
+" insert 模式下也可用 set whichwrap& 可恢复默认值，其他也是
+" 让退格，空格，上下箭头遇到行首行尾时自动移到下一行（包括insert模式）
 set whichwrap=b,s,<,>,[,]
 
 " 改变制表符 外观 ^I 不是很美观， 改变成 >--- 显示
 set listchars=tab:>-,trail:-
 
-" 规定关键字， 就是一个word 中可以包含哪些字符,  添加	-这样的话 形如 upper-case 的
-" 词就可以被当作  word了 删除一个 字符 使用 操作符 -= , 如 删除 _ set iskeyword-=_  
-set iskeyword+=-
+" 规定关键字， 就是一个word 中可以包含哪些字符,  添加	-这样的话 形如
+" upper-case 的词就可以被当作  word了 删除一个 字符 使用 操作符 -= , 如 删除 _
+" set iskeyword-=_  set iskeyword+=- 带有如下符号的单词不要被换行分割
+set iskeyword+=_,$,@,%,#,-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -311,15 +362,17 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
-"设置光标高亮显示
+"设置光标高亮显示, 高亮光标所在行
 set cursorline
 set cursorcolumn
 set ttyfast
+set shortmess=atI " 启动的时候不显示那个援助乌干达儿童的提示 
+set go=           " 不要图形按钮   
 
-"Always show current position  "设置 右下角的 显示 当前光标 行列信息
+"Always show current position  设置 右下角的 显示 当前光标 行列信息
 set ruler
 
-" Height of the command bar
+" Height of the command bar " 显示状态行数，高度
 set cmdheight=2
 
 "匹配括号的规则，增加针对html的<>
@@ -328,11 +381,9 @@ set matchpairs=(:),{:},[:],<:>
 " Ignore case when searching
 set ignorecase
 
-" set hightlight search
-set hlsearch
-
-" set incremental search
-set incsearch
+"搜索逐字符高亮
+set hlsearch                " set hightlight search
+set incsearch               " set incremental search
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -343,6 +394,9 @@ set magic
 "显示行号
 set number
 
+" 历史记录数
+set history=1000
+
 " A buffer becomes hidden when it is abandoned
 set hid
 
@@ -351,7 +405,55 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+"右下角显示一个完整命令的已经完成部分, 输入的命令显示出来，看的清楚些
+set showcmd
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => 窗体设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"彩色显示第85行
+set colorcolumn=85
 
+"行号栏的宽度
+set numberwidth=4
+
+""去除左右两边的滚动条
+set go-=r
+set go-=L
+
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+" Always show the status line
+set laststatus=2        " 启动显示状态行(1),总是显示状态行(2) 
+" Format the status line
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "状态行显示的内容 
+
+" 显示中文帮助
+if version >= 603
+    set helplang=cn
+    set encoding=utf-8
+endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+" spell 拼写检查打开拼写检查(Turning on the Vim spell check)::set spell
+" 关闭拼写检查(Turning off the Vim spell check)：:set nospell
+" :setlocal spell spelllang=en_us 
+" :setlocal spell spelllang=de
+" ]s        : 将光标移到下一个拼写错误处
+"[s        : 将光标移到上一个拼写错误处
+"zg       : 将单词加入词典
+"zug     : 撤销将单词加入词典
+"z=        : 拼写建议
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -362,8 +464,10 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
+" =>  Editing mappings     键盘命令
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -397,128 +501,77 @@ map <leader>tm :tabmove
 " Super useful when editing files in the same directory
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
-"插入模式下移动
+"插入模式下移动, 有用，在插入模式下，不停移动。 方便！！
 inoremap <c-j> <down>
 inoremap <c-k> <up>
 inoremap <c-l> <right>
 inoremap <c-h> <left>
 
+"比较文件
+nnoremap <C-F2> :vert diffsplit 
+"列出当前目录文件
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <esc>:NERDTreeToggle<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
+"C，C++ 按F5编译运行
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python2.7 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+        " exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+    endif
+endfunc
+"C,C++的调试
+map <F8> :call Rungdb()<CR>
+func! Rungdb()
+    exec "w"
+    exec "!g++ % -g -o %<"
+    exec "!gdb ./%<"
+endfunc
+"代码格式优化化
+map <F6> :call FormartSrc()<CR><CR>
+"定义FormartSrc()
+func FormartSrc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!astyle --style=ansi -a --suffix=none %"
+    elseif &filetype == 'cpp' || &filetype == 'hpp'
+        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+    elseif &filetype == 'perl'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'py'||&filetype == 'python'
+        exec "r !autopep8 -i --aggressive %"
+    elseif &filetype == 'java'
+        exec "!astyle --style=java --suffix=none %"
+    elseif &filetype == 'jsp'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'xml'
+        exec "!astyle --style=gnu --suffix=none %"
+    else
+        exec "normal gg=G"
+        return
+    endif
+    exec "e! %"
+endfunc
+"结束定义FormartSrc
 
-"右下角显示一个完整命令的已经完成部分
-set showcmd
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-" spell 拼写检查打开拼写检查(Turning on the Vim spell check)::set spell
-" 关闭拼写检查(Turning off the Vim spell check)：:set nospell
-" :setlocal spell spelllang=en_us 
-" :setlocal spell spelllang=de
-" ]s        : 将光标移到下一个拼写错误处
-"[s        : 将光标移到上一个拼写错误处
-"zg       : 将单词加入词典
-"zug     : 撤销将单词加入词典
-"z=        : 拼写建议
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => 窗体设置
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"初始窗口的宽度,初始位置
-winpos 52 42 
-set lines=40 columns=120
-
-"以下设置用来是vim正确显示过长的行
-set textwidth=80
-set formatoptions=qrnl
-
-"彩色显示第85行
-set colorcolumn=85
-
-"行号栏的宽度
-set numberwidth=4
-
-"设置隐藏gvim的菜单和工具栏 F1切换
-set guioptions-=m
-set guioptions-=T
-""去除左右两边的滚动条
-set go-=r
-set go-=L
-
-map <silent> <F1> :if &guioptions =~# 'T' <Bar>
-        \set guioptions-=T <Bar>
-        \set guioptions-=m <bar>
-    \else <Bar>
-        \set guioptions+=T <Bar>
-        \set guioptions+=m <Bar>
-    \endif<CR>
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-" Format the status line
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! CmdLine(str)
-exe "menu Foo.Bar :" . a:str
-emenu Foo.Bar
-unmenu Foo
-endfunction
-function! VisualSelection(direction, extra_filter) range
-let l:saved_reg = @"
-execute "normal! vgvy"
-let l:pattern = escape(@", '\\/.*$^~[]')
-let l:pattern = substitute(l:pattern, "\n$", "", "")
-if a:direction == 'b'
-execute "normal ?" . l:pattern . "^M"
-elseif a:direction == 'gv'
-call CmdLine("Ack \"" . l:pattern . "\" " )
-elseif a:direction == 'replace'
-call CmdLine("%s" . '/'. l:pattern . '/')
-elseif a:direction == 'f'
-execute "normal /" . l:pattern . "^M"
-endif
-let @/ = l:pattern
-let @" = l:saved_reg
-endfunction
-" Returns true if paste mode is enabled
-function! HasPaste()
-if &paste
-return 'PASTE MODE '
-en
-return ''
-endfunction
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-let l:currentBufNum = bufnr("%")
-let l:alternateBufNum = bufnr("#")
-if buflisted(l:alternateBufNum)
-buffer #
-else
-bnext
-endif
-if bufnr("%") == l:currentBufNum
-new
-endif
-if buflisted(l:currentBufNum)
-execute("bdelete! ".l:currentBufNum)
-endif
-endfunction
