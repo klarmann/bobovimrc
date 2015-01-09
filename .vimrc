@@ -6,7 +6,8 @@
 "       1.0 - 2014-12-05 12:51:11
 "       1.1 - 2014-12-08 20:41:19
 "       1.2 - 2014-12-09 18:54:36 -- upload to GitHub
-"       1.3 - 2014-12-11 14:58:37 -- 2015-01-06 19:49:47
+"       1.3 - 2014-12-11 14:58:37 -- 2015-01-06 19:49:47 -- 已经上传
+"       1.4 - 2015-01-07 17:39:58
 " Blog_post: 
 "	https://klarmannde.wordpress.com
 " Awesome_version:
@@ -33,26 +34,21 @@ nnoremap <silent><leader>vv :source ~/.vimrc<CR>
 " ,w 快速保存 Fast saving
 nmap <leader>w :w!<cr>
 
-" 快速退出
-if has("gui_running")
-    nmap <silent> <C-q> :q!<CR>
-    vmap <silent> <C-q> :q!<CR>
-endif
-
 " 设置缩写
-ab noo ==============================================================
-ab moo """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+abbreviate noo ==============================================================
+abbreviate moo """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 abbreviate #e ****************************************/ 
 abbreviate #b /**************************************** 
-abbreviate #i #include <
+abbreviate #i #include
+abbreviate #d #define
 
 " 插入当前系统时间 ， 上边的版本后面时间 就是 用这个插入的，方便多了
 nnoremap <F5> "=strftime("%F %H:%M:%S")<CR>gP
 inoremap <F5> <C-R>=strftime("%F %H:%M:%S")<CR>
 
-"===================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "插件的设置 Vundle －－ 用来管理插件 方便快捷，整齐大方。
-"===================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 set nocompatible              " be iMproved, required, 去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
 filetype off                  " required
 
@@ -64,13 +60,9 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" 中文输入
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" vimim --->  input chinese
-" i_ctrl-^  切换中文输入法 其实是 ctrl + 6 , 不需要shift
-" ctrl- \ 更方便，同emacs 中eim 一样了， 拷贝 中文 "＋y 再粘贴到 firefox
-" 就不用输入法了， 因此卸载小企鹅，企鹅
-" 注意：发现ctrl-6 和 ctrl-\ 有不同 ， ctrl 6 能 用 hjkl 翻页选字， ctrl \
+" 中文输入 vim im
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
+" ctrl- \ 更方便，同emacs 中eim 一样了
 " 用 ctrl n 翻页。 还有就是 ctrl l 输入空格方便些。 目前偏向于 ctrl \
 Plugin 'VimIM'
 let g:vimim_map='c-bslash' "  Ctrl-\ 开关输入法 这样的话 就和 emacs 中的eim一样了
@@ -78,25 +70,23 @@ let g:vimim_cloud=-1 " 彻底关闭云输入
 let g:vimim_toggle=-1 " 彻底关闭循环键
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" Color
+" ColorScheme 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'tomasr/molokai'
+Plugin 'nanotech/jellybeans.vim'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " drawit --> 画图工具
-" 
-":DIstart，开始绘制结构化字符图形
-":Distop，停止绘制结构化字符图形
-"空格，绘制或擦出字符
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-Plugin 'DrawIt'
+"Plugin 'DrawIt'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "NerdTree的设置 
 "help NERD_tree.txt
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Plugin 'The-NERD-tree'
-nnoremap <silent> <F12> :NERDTreeToggle<CR>
+"nnoremap <silent> <F12> :NERDTreeToggle<CR>
 let NERDTreeShowBookmarks=1
 let NERDTreeShowFiles=1
 let NERDTreeShowHidden=1
@@ -106,35 +96,32 @@ let NERDTreeWinPos=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " Netrw 是内建插件，当你使用vim尝试打开目录时，vim会自动调用netrw.vim插件打开该目录
-"<F1>        显示帮助
-"<cr>        如果光标下为目录，则进入该目录；如果光标下是文件，则用vim打开该文件
-"-           返回上级目录 "c           切换vim的当前工作目录为正在浏览的目录
-"d           创建目录 "D           删除文件或目录
-"i           切换显示方式 "R           改名文件或目录
-"s           选择排序方式 "x           定制浏览方式，使用你指定的程序打开该文件
+"-  返回上级目录        c       切换vim的当前工作目录为正在浏览的目录
+"d 创建目录             D       删除文件或目录
+"i 切换显示方式         R       改名文件或目录
+"s 选择排序方式         x       定制浏览方式，使用你指定的程序打开该文件
 " 其它常用键，诸如使用书签、隐藏符合条件的文件等，请参阅netrw帮助页。 
-""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " netrw setting
-""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 let g:netrw_winsize = 30
 nmap <silent> <leader>fe :Sexplore!<cr> 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" BufExplorer Buffer Explorer / Browser.
+" BufExplorer 
 " This plugin can be opened with <leader+o>                   
-" BufExplorer已经映射了几个键绑定，
-" 例如，使用”,bv“就可以打开一个垂直分割窗口显示当前的缓冲区
+" BufExplorer已经映射了几个键绑定，例如，使用”,bv“就可以打开一个垂直分割窗口显示当前的缓冲区
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Plugin 'bufexplorer.zip'
-let g:bufExplorerDefaultHelp=0       " Do not show default help.
-let g:bufExplorerShowRelativePath=1  " Show relative paths.
+"let g:bufExplorerDefaultHelp=0       " Do not show default help.
+"let g:bufExplorerShowRelativePath=1  " Show relative paths.
 let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-let g:bufExplorerSplitRight=0        " Split left.
-let g:bufExplorerSplitVertical=1     " Split vertically.
-let g:bufExplorerSplitVertSize = 30  " Split width
-let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-autocmd BufWinEnter \[Buf\ List\] setl nonumber
-map <leader>o :BufExplorer<cr>
+"let g:bufExplorerSplitRight=0        " Split left.
+"let g:bufExplorerSplitVertical=1     " Split vertically.
+"let g:bufExplorerSplitVertSize = 30  " Split width
+"let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+"autocmd BufWinEnter \[Buf\ List\] setl nonumber
+map <leader>o :BufExplorerVerticalSplit<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " mru.vim  Plugin to manage Most Recently Used (MRU) files. 
@@ -144,17 +131,15 @@ map <leader>o :BufExplorer<cr>
 Plugin 'mru.vim'
 map <leader>f :MRU<CR>
 
-""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "下面是程序语言类的 插件
-""""""""""""""""""""""""""""""
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "YOUCOMPLETEME
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Plugin 'Valloric/YouCompleteMe'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-"
+"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " scrooloose/syntastic
 " Syntastic is a syntax checking plugin that runs files through external syntax
@@ -172,7 +157,7 @@ Plugin 'scrooloose/syntastic'
 "需要头文件名补全时输入Ctrl+X Ctrl+I，需要文件路径补全时输入Ctrl+X Ctrl+F。
 " "取消补全内容以分割子窗口形式出现，只显示补全列表
 "
-set tags=~/workspace/linux-0.11/tags
+"set tags=~/workspace/linux-0.11/tags
 set completeopt=longest,menu
 
 """"""""""""""""""""""""""""""
@@ -184,7 +169,7 @@ Plugin 'taglist.vim'
 """"""""""""""""""""""""""""""
 " bash 的支持
 """"""""""""""""""""""""""""""
-Plugin 'bash-support.vim'
+"Plugin 'bash-support.vim'
 
 """"""""""""""""""""""""""""""
 " c.vim 
@@ -194,14 +179,15 @@ Plugin 'bash-support.vim'
 "   Speed up writing new code considerably.
 "   Write code und comments with a professional appearance from the beginning.
 "   Use code snippets
-Plugin 'c.vim'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+"Plugin 'c.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " ctrlp.vim: Fuzzy file, buffer, mru and tag finder. 
 " In my config it's mapped to <Ctrl+F>, because <Ctrl+P> is used by YankRing
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 Plugin 'kien/ctrlp.vim'
-let g:ctrlp_map = '<c-f>'
+"let g:ctrlp_map = '<c-f>'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "mattn/emmet-vim 
@@ -219,9 +205,16 @@ Plugin 'amix/vim-zenroom2'
 map <leader>z :Goyo<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-" highlight.vim
+" vimwiki
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-Plugin 'highlight.vim'
+"Plugin 'vimwiki'
+" 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
+"let g:vimwiki_menu = ''
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" itchyny/calendar.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+Plugin 'itchyny/calendar.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -243,34 +236,15 @@ filetype plugin indent on    " required  为特定文件类型载入相关缩进
 " Enable syntax highlighting ,打开高亮
 syntax enable
 
-" Set extra options when running in GUI mode
-if ! has("gui_running")
-    set t_Co=256
-endif 
-
-"set background=dark
-"colorscheme peaksea
-"colorscheme solarized
-
-"If you prefer the scheme to match the original monokai background color, put
-"this in your .vimrc file: 
-let g:molokai_original = 1
-"There is also an alternative scheme under development for color terminals which
-"attempts to bring the 256 color version as close as possible to the the default
-"(dark) GUI version. To access, add this to your .vimrc:
-let g:rehash256 = 1
-
-colorscheme molokai
+colorscheme jellybeans 
 
 " 设置字体
 set guifont=DejaVu\ Sans\ mono\ 12 
 
-"autocmd InsertEnter * se cul " 用浅色高亮当前行
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off
 set nobackup
 set nowb
 set noswapfile
@@ -322,13 +296,17 @@ set formatoptions=qrnl
 " 自动缩进
 set ai "Auto indent
 set si "Smart indent
-"set wrap "Wrap lines
+set wrap "Wrap lines
 
 " 要查看 左右 10个字符的上下文
-set sidescroll=10
+"set sidescroll=10
 
 " 光标移动到buffer的顶部和底部时保持3行距离 
-set scrolloff=3         
+"set scrolloff=3         
+
+" 折叠 zf,zo,zc,zd,zR,zM,zE
+" 指定宽度的列在窗口的一侧显示
+set foldcolumn=2
 
 " Configure backspace so it acts as it should act;
 " 设置 insert 模式下退格键 何时可以删除光标前的字符
@@ -343,7 +321,7 @@ set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
 
 " 改变制表符 外观 ^I 不是很美观， 改变成 >--- 显示
-set listchars=tab:>-,trail:-
+"set listchars=tab:>-,trail:-
 
 " 规定关键字， 就是一个word 中可以包含哪些字符,  添加	-这样的话 形如
 " upper-case 的词就可以被当作  word了 删除一个 字符 使用 操作符 -= , 如 删除 _
@@ -361,13 +339,6 @@ set wildmenu
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
-
-"设置光标高亮显示, 高亮光标所在行
-set cursorline
-set cursorcolumn
-set ttyfast
-set shortmess=atI " 启动的时候不显示那个援助乌干达儿童的提示 
-set go=           " 不要图形按钮   
 
 "Always show current position  设置 右下角的 显示 当前光标 行列信息
 set ruler
@@ -404,9 +375,11 @@ set hid
 set noerrorbells
 set novisualbell
 set t_vb=
-set tm=500
+"set tm=500
+
 "右下角显示一个完整命令的已经完成部分, 输入的命令显示出来，看的清楚些
 set showcmd
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => 窗体设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -420,6 +393,13 @@ set numberwidth=4
 set go-=r
 set go-=L
 
+"设置光标高亮显示, 高亮光标所在行
+set cursorline
+set cursorcolumn
+set ttyfast
+"set shortmess=atI " 启动的时候不显示那个援助乌干达儿童的提示 
+set go=           " 不要图形按钮   
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -430,10 +410,10 @@ set laststatus=2        " 启动显示状态行(1),总是显示状态行(2)
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} "状态行显示的内容 
 
 " 显示中文帮助
-if version >= 603
-    set helplang=cn
-    set encoding=utf-8
-endif
+"if version >= 603
+"    set helplang=cn
+"    set encoding=utf-8
+"endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 " spell 拼写检查打开拼写检查(Turning on the Vim spell check)::set spell
@@ -460,21 +440,21 @@ map <leader>s? z=
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
+"vnoremap <silent> * :call VisualSelection('f', '')<CR>
+"vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Editing mappings     键盘命令
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
-map 0 ^
+"map 0 ^
 " Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
+"map j gj
+"map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <c-space> ?
+"map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -486,35 +466,31 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+"map <leader>bd :Bclose<cr>
 
 " Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+"map <leader>ba :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 "插入模式下移动, 有用，在插入模式下，不停移动。 方便！！
-inoremap <c-j> <down>
-inoremap <c-k> <up>
-inoremap <c-l> <right>
-inoremap <c-h> <left>
+"inoremap <c-j> <down>
+"inoremap <c-k> <up>
+"inoremap <c-l> <right>
+"inoremap <c-h> <left>
 
-"比较文件
-nnoremap <C-F2> :vert diffsplit 
-"列出当前目录文件
-map <F3> :NERDTreeToggle<CR>
-imap <F3> <esc>:NERDTreeToggle<CR>
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" 功能函数
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "C，C++ 按F5编译运行
-map <F5> :call CompileRunGcc()<CR>
+"map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
     if &filetype == 'c'
@@ -540,17 +516,19 @@ func! CompileRunGcc()
         exec "!firefox %.html &"
     endif
 endfunc
+
 "C,C++的调试
-map <F8> :call Rungdb()<CR>
+"map <F8> :call Rungdb()<CR>
 func! Rungdb()
     exec "w"
     exec "!g++ % -g -o %<"
     exec "!gdb ./%<"
 endfunc
+
 "代码格式优化化
-map <F6> :call FormartSrc()<CR><CR>
+"map <F6> :call FormartSrc()<CR><CR>
 "定义FormartSrc()
-func FormartSrc()
+func! FormartSrc()
     exec "w"
     if &filetype == 'c'
         exec "!astyle --style=ansi -a --suffix=none %"
@@ -573,6 +551,26 @@ func FormartSrc()
     exec "e! %"
 endfunc
 "结束定义FormartSrc
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("Ack \"" . l:pattern . "\" " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
 
 "  dictionary completion :ctrl-x ctrl-k 
 set dictionary=/usr/share/dict/words
