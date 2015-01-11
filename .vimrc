@@ -7,7 +7,7 @@
 "       1.1 - 2014-12-08 20:41:19
 "       1.2 - 2014-12-09 18:54:36 -- upload to GitHub
 "       1.3 - 2014-12-11 14:58:37 -- 2015-01-06 19:49:47 -- 已经上传
-"       1.4 - 2015-01-07 17:39:58
+"       1.4 - 2015-01-07 17:39:58 -- 2015-01-11 22:27:31
 " Blog_post: 
 "	https://klarmannde.wordpress.com
 " Awesome_version:
@@ -29,7 +29,7 @@ let g:mapleader = ","
 nnoremap <leader>ee :e ~/.vimrc<CR>
 
 " ,vv  快速编译 
-nnoremap <silent><leader>vv :source ~/.vimrc<CR>
+"nnoremap <silent><leader>vv :source ~/.vimrc<CR>
 
 " ,w 快速保存 Fast saving
 nmap <leader>w :w!<cr>
@@ -47,7 +47,7 @@ nnoremap <F5> "=strftime("%F %H:%M:%S")<CR>gP
 inoremap <F5> <C-R>=strftime("%F %H:%M:%S")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-"插件的设置 Vundle －－ 用来管理插件 方便快捷，整齐大方。
+" 插件的设置 Vundle －－ 用来管理插件 方便快捷，整齐大方。
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 set nocompatible              " be iMproved, required, 去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
 filetype off                  " required
@@ -72,8 +72,8 @@ let g:vimim_toggle=-1 " 彻底关闭循环键
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " ColorScheme 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-"Plugin 'altercation/vim-colors-solarized'
-"Plugin 'tomasr/molokai'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
 Plugin 'nanotech/jellybeans.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
@@ -137,9 +137,11 @@ map <leader>f :MRU<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 "YOUCOMPLETEME
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
-Plugin 'Valloric/YouCompleteMe'
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"Plugin 'Valloric/YouCompleteMe'
+"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+"let g:ycm_confirm_extra_conf=0
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " scrooloose/syntastic
 " Syntastic is a syntax checking plugin that runs files through external syntax
@@ -239,7 +241,12 @@ syntax enable
 colorscheme jellybeans 
 
 " 设置字体
-set guifont=DejaVu\ Sans\ mono\ 12 
+set guifont=DejaVu\ Sans\ mono\ 13 
+"set guifont=Inconsolata\ 13 
+
+" 设置中文字体
+set guifontwide=KaiTi\ 14
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
